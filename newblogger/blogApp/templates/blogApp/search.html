@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block title %}Search Bar{% endblock title %}
+{% block css %}
+.crousel-img{ width:1349px;
+height:524px;}
+{% endblock css %}
+{% block content %}
+
+{% load static%}
+<hr>
+<div class="container">
+      <h1>Search Results:--</h1>
+      <br>
+  </div>
+
+
+<!--Main Containt start form here-->
+  {% if blog|length == 0%}
+    <div class="container">
+      <p>Your search - <b>{{query}}</b> - could not be found in available post.</p>
+      <b>suggestion:</b>
+        <ul>
+          <li>Check that all words are spelled correctly.</li>
+          <li>Try entering other keywords.</li>
+          <li>Try adding more general keywords.</li>
+          <li>Try entering fewer keywords.</li>
+        </ul>
+    </div>
+  {% else%}
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 blog-main">
+            {% for i in blog%}
+              <div class="my-3  border border-success">
+                <h2 class="p-4 bg-light text-success ">{{i.blog_title}}</h2>
+                <h3 class="p-3">{{i.blog_date}}</h3>
+                <p class="p-3">{{i.blog_content}}</p>
+              </div><!-- /.blog-post -->
+            {% endfor %}
+          </div><!-- /.blog-main -->
+        </div><!-- /.row -->
+      </div><!-- /.container -->
+ {% endif %}
+
+{% endblock content %}

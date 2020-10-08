@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block title %}Blog Page{% endblock title %}
+{% block css %}
+
+.img-sponsor{ width:300px;
+height:300px;}
+
+{% endblock css %}
+{% block content %}
+{% load static %}
+<hr>
+{% load static %}
+<div class="bg-light p-3">
+    <h1 class="text-success text-center">iCodder Blog Sponsor!</h1>
+    <div>
+        <div class="row text-center p-2 ">
+            <div class="col-md-3">
+                 <img src="{% static 'blogApp/apple-log.jpg' %}" class="img-sponsor" alt="...">
+            </div>
+            <div class="col-md-3">
+               <img src="{% static 'blogApp/tcs.png' %}" class="img-sponsor" alt="...">
+            </div>
+            <div class="col-md-3">
+               <img src="{% static 'blogApp/upwork.png' %}" class="img-sponsor" alt="...">
+            </div>
+            <div class="col-md-3">
+               <img src="{% static 'blogApp/microsoft.jpg' %}" class="img-sponsor" alt="...">
+            </div>
+        </div>
+    </div>
+</div>
+{% for d in data%}
+ <div class="m-5  border border-success">
+  <h2 class="p-4 bg-light text-success">{{d.blog_title}}</h2>
+  <b class="p-3">{{d.blog_date}}</b>
+  <p class="p-3">{{d.blog_content}}</p>
+  </div>
+<hr>
+<div class="container">
+    <h2>Comments </h2>
+    <form action="/comment/" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+           <input type="text" class="form-control" name="comment" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter comment here">
+        </div>
+        <input type="hidden" name="parentSno" value={{d.blog_s_no}}>
+        <input type="hidden" name="cSno" value="">
+        <input type="submit"  class="btn btn-primary" value="Submit">
+    </form>
+    {% for com in comment%}
+     <div class="row mt-4">
+         <div class="col-sm-3 col-lg-1 col-xl-1">
+             <img class="w-100 d-block mx-auto rounded-circle" src="{% static 'blogApp/commentImg.png' %}">
+         </div>
+         <div class="col-md-8 col-lg-10 col-xl-10 commentContainer">
+             <div class="my-2 mx-2">
+                 <b>{{com.user.username}}</b> <span class="badge badge-secondary">{{com.timestamp}}</span><br>
+                 {{com.comment}}
+             </div>
+             <button class="btn btn-danger btn-sm" type="button" data-toggle="collapse" data-target="#replay{{com.s_no}}" aria-expanded="false" aria-controls="collapseExample" >Add Reply </button>
+             <!-- replies are here -->
+             <div class="collapse" id="replay{{com.s_no}}">
+                 <form action="/comment/" method="post">
+                      {% csrf_token %}
+                     <textarea class="form-control my-2" placeholder="Write a reply..." name="comment"></textarea>
+                     <input type="hidden" name="cSno" value="{{com.s_no}}">
+                      <input type="hidden" name="parentSno" value={{d.blog_s_no}}>
+                     <button class="btn btn-sm btn-danger" type="submit">Reply</button>
+                 </form>
+             </div>
+             <div class='commentReplies'> </div>
+         </div>
+     </div>
+    {% endfor %}
+    {% endfor %}
+</div>
+{% endblock content %}

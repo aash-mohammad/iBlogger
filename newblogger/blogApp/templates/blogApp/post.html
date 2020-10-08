@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Post Blog{% endblock title%}
+
+
+
+{% block content %}
+ <div class="alert alert-success" role="alert">
+  <h3 style="text-align: center;">Here Post Blog!</h3>
+</div>
+    {% if user.is_authenticated %}
+<div class="container">
+      <form action="/post/" method="post">
+          {% csrf_token %}
+            <div class="form-group container">
+              <label><b>Enter your Blog title here!</b></label><br>
+              <textarea class="form-control" rows="2" name="title" required></textarea>
+            </div>
+            <div class="form-group container">
+              <label><b>Enter your Blog slug here!</b></label><br>
+              <textarea class="form-control" rows="2" name="slug" required></textarea>
+            </div>
+            <div class="form-group container">
+              <label><b>Enter your Blog Content here!</b></label><br>
+              <textarea class="form-control" rows="8" name="content" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-outline-success my-2" style="margin-left: 500px;">Submit</button>
+      </form>
+</div>
+{% else%}
+    <script>
+        alert("First SignUp iBlogger");
+    </script>
+    {%endif%}
+
+{% endblock content %}

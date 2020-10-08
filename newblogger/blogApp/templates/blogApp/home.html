@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}newBlogger{% endblock title %}
+{% block css %}
+
+.crousel-img{ width:1349px;
+height:524px;}
+
+{% endblock css %}
+{% block content %}
+
+{% load static%}
+<div class="carousel slide">
+  <img src="{% static 'blogApp/blog-business-camera.jpg' %}" class="crousel-img" alt="...">
+  <div class="carousel-caption d-sm-block">
+    <div class="col-md-6 px-0 text-success">
+      <h1 class="display-4 font-italic">iCodder Blog!</h1>
+      <h1 class="display-4">Title of a longer featured blog post</h1>
+      <p class="lead my-3">Multiple lines of text that form the lede, informing new readers quickly and efficiently about what’s most interesting in this post’s contents.</p>
+      <p class="lead mb-0"><a href="/" class="text-success font-weight-bold">Continue reading...</a></p>
+    </div>
+  </div>
+</div>
+
+<div class="container mt-2">
+{%for d in data%}
+  <div class="my-3  border border-success">
+  <h2 class="p-4 bg-light text-success">{{d.blog_title}}</h2>
+  <b class="p-3">{{d.blog_date}}</b>
+  <p class="p-3">{{d.blog_content| truncatechars:200}}</p> <!--specify that 200 character show only content-->
+    <a class="btn btn-outline-success m-2 ml-10" href="/blog/{{d.slug}}"><b>Continue to be reading...</b></a>
+  </div>
+{% endfor %}
+  <!--<hr>-->
+  <!--<nav class="blog-pagination mb-3" style="margin-left:400px;">-->
+        <!--<a class="btn btn-outline-primary" href="#">Older</a>-->
+        <!--<a class="btn btn-outline-primary" href="#">Newer</a>-->
+  <!--</nav>-->
+</div>
+
+{% endblock content %}
